@@ -59,7 +59,7 @@ class TicTacToe
     @input = gets.strip
     @i = input_to_index(input)
     if valid_move?
-      value = current_player
+      
       move(array, index, value)
       display
     else
