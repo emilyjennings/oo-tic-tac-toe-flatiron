@@ -4,68 +4,64 @@
 #figure out who's turn it is and track number of turns
 #winner? congratulate, draw? say so
 
+
+
 class TicTacToe
   def initialize(board = nil)
     @board = board || Array.new(9, " ")
   end
 
+  def display_board
+     puts " #{@board[0]} | #{@board[1]} | #{@board[2]} "
+     puts "-----------"
+     puts " #{@board[3]} | #{@board[4]} | #{@board[5]} "
+     puts "-----------"
+     puts " #{@board[6]} | #{@board[7]} | #{@board[8]} "
+   end
+
   def input_to_index(input)
-    i = input.to_i
-    i = i-1
+    @i = @input.to_i
+    @i = i-1
   end
 
-  def position_taken?(array, index)
-    if array[index] == " " ||
-      array[index] == "" ||
-      array[index] == nil
+  def position_taken?
+    if @board[index] == " " ||
+      @board[index] == "" ||
+      @board[index] == nil
       return false
-    elsif array[index] == "X" ||
-      array[index] == "O"
+    elsif @board[index] == "X" ||
+      @board[index] == "O"
       return true
     end
   end
 
-  def valid_move?(array, index)
-    if !position_taken?(array, index) &&
-      index.between?(0,8)
-        return true
-    else
-      return false
+  def valid_move?
+    !position_taken? && index.between?(0,8)
+  end
+
+  def turn_count
+    @board.count do |position|
+      position == "X" || position == "O"
     end
   end
 
-  def turn_count(board)
-    counter = 0
-    board.each do |position|
-      if position == "X" || position == "O"
-        counter += 1
-      else
-        counter += 0
-      end
-    end
-    counter
-  end
 
-
-  def current_player(board)
-    turns = turn_count(board)
-    turns.even? ? "X" : "O"
+  def current_player
+    turn_count.even? ? "X" : "O"
   end
 
   def move(array, index, value)
-
       array[index]=value
-
   end
 
-  def turn(board)
+  def turn
     puts "Please enter 1-9:"
-    input = gets.strip
-    i = input_to_index(input)
-    if valid_move?(board, i)
-      value = current_player(board)
-      move(board, i, value)
-      display_board(board)
+    @input = gets.strip
+    @i = input_to_index(input)
+    if valid_move?
+      value = current_player
+      move(array, index, value)
+      display
     else
       puts "Please enter 1-9:"
       input = gets.strip
