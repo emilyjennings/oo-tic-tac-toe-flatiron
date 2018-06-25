@@ -7,9 +7,21 @@
 
 
 class TicTacToe
+
   def initialize(board = nil)
     @board = board || Array.new(9, " ")
   end
+
+  WIN_COMBINATIONS = [
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [6, 4, 2]
+  ]
 
   def display_board
      puts " #{@board[0]} | #{@board[1]} | #{@board[2]} "
@@ -20,8 +32,13 @@ class TicTacToe
    end
 
   def input_to_index(input)
-    @i = @input.to_i
-    @i = i-1
+    @i = input.to_i
+    @i = @i-1
+  end
+
+
+  def move(index, value)
+      @board[@i]=value
   end
 
   def position_taken?
@@ -50,8 +67,10 @@ class TicTacToe
     turn_count.even? ? "X" : "O"
   end
 
-  def move(array, index, value)
-      array[index]=value
+
+  def current_player(board)
+    turns = turn_count(board)
+    turns.even? ? "X" : "O"
   end
 
   def turn
@@ -59,47 +78,24 @@ class TicTacToe
     @input = gets.strip
     @i = input_to_index(input)
     if valid_move?
-      
+      value = current_player
       move(array, index, value)
       display
     else
       puts "Please enter 1-9:"
-      input = gets.strip
-      i = input_to_index(input)
+      @input = gets.strip
+      @i = input_to_index(input)
     end
 
   end
 
 
-  def turn_count(board)
-    counter = 0
-    board.each do |position|
-      if position == "X" || position == "O"
-        counter += 1
-      else
-        counter += 0
-      end
-    end
-    counter
-  end
 
 
-  def current_player(board)
-    turns = turn_count(board)
-    turns.even? ? "X" : "O"
-  end
 
 
-  WIN_COMBINATIONS = [
-    [0, 1, 2],
-    [3, 4, 5],
-    [6, 7, 8],
-    [0, 3, 6],
-    [1, 4, 7],
-    [2, 5, 8],
-    [0, 4, 8],
-    [6, 4, 2]
-  ]
+
+
 
   def won?(board)
     WIN_COMBINATIONS.detect do |win_combination| #goes through each individual arrays in the nested array
@@ -107,9 +103,9 @@ class TicTacToe
       win_index_2 = win_combination[1]
       win_index_3 = win_combination[2]
 
-      position_1 = board[win_index_1] # load the value of the board at win_index_1
-      position_2 = board[win_index_2] # load the value of the board at win_index_2
-      position_3 = board[win_index_3] # load the value of the board at win_index_3
+      position_1 = @board[win_index_1] # load the value of the board at win_index_1
+      position_2 = @board[win_index_2] # load the value of the board at win_index_2
+      position_3 = @board[win_index_3] # load the value of the board at win_index_3
 
       if ("#{position_1}" == "X" && "#{position_2}" == "X" && "#{position_3}" == "X")
         return win_combination # return the win_combination indexes that won.
@@ -121,31 +117,31 @@ class TicTacToe
   end
 
 
-  def full?(board)
-      if board.detect{|place| place == " "}
+  def full?
+      if @board.detect{|place| place == " "}
         return false
-      elsif board.each{|place| place == "X" || place == "O"}
+      elsif @board.each{|place| place == "X" || place == "O"}
         return true
       end
   end
 
-  def draw?(board)
-    full?(board) && !won?(board)
+  def draw?
+    full? && !won?
   end
 
-  def over?(board)
-    draw?(board) || won?(board)
+  def over?
+    draw? || won?
   end
 
-  def winner(board)
+  def winner
     WIN_COMBINATIONS.detect do |win_combination| #goes through each individual arrays in the nested array
       win_index_1 = win_combination[0] # gives backthe numbers in the arrays
       win_index_2 = win_combination[1]
       win_index_3 = win_combination[2]
 
-      position_1 = board[win_index_1] # load the value of the board at win_index_1
-      position_2 = board[win_index_2] # load the value of the board at win_index_2
-      position_3 = board[win_index_3] # load the value of the board at win_index_3
+      position_1 = @board[win_index_1] # load the value of the board at win_index_1
+      position_2 = @board[win_index_2] # load the value of the board at win_index_2
+      position_3 = @board[win_index_3] # load the value of the board at win_index_3
 
       if ("#{position_1}" == "X" && "#{position_2}" == "X" && "#{position_3}" == "X")
         return "X"
@@ -157,13 +153,13 @@ class TicTacToe
   end
 
   def play(board)
-    until over?(board)
-      turn(board)
+    until over?
+      turn
     end
 
-    if won?(board)
+    if won?
       puts "Congratulations #{winner(board)}!"
-    else draw?(board)
+    else draw?
       puts "Cat's Game!"
     end
   end
