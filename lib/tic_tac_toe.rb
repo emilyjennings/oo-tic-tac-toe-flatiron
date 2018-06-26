@@ -34,14 +34,17 @@ class TicTacToe
   def input_to_index(input)
     @i = input.to_i
     @i = @i-1
+    @index = @i
   end
 
 
   def move(index, value)
-      @board[@i]=value
+      @board[index]=value
   end
 
-  def position_taken?
+
+
+  def position_taken?(index)
     if @board[index] == " " ||
       @board[index] == "" ||
       @board[index] == nil
@@ -52,9 +55,12 @@ class TicTacToe
     end
   end
 
-  def valid_move?
-    !position_taken? && index.between?(0,8)
+
+
+  def valid_move?(index)
+    !position_taken?(index) && index.between?(0,8)
   end
+
 
   def turn_count
     @board.count do |position|
@@ -63,33 +69,31 @@ class TicTacToe
   end
 
 
+
   def current_player
     turn_count.even? ? "X" : "O"
   end
 
 
-  def current_player(board)
-    turns = turn_count(board)
-    turns.even? ? "X" : "O"
-  end
 
-  def turn
+
+  def turn(input)
     puts "Please enter 1-9:"
     @input = gets.strip
-    @i = input_to_index(input)
+    input_to_index(input)
     if valid_move?
       value = current_player
       move(array, index, value)
-      display
+      display_board
     else
       puts "Please enter 1-9:"
       @input = gets.strip
-      @i = input_to_index(input)
+      input_to_index(input)
     end
 
   end
 
-
+=begin
 
 
 
@@ -152,6 +156,7 @@ class TicTacToe
     end
   end
 
+
   def play(board)
     until over?
       turn
@@ -163,6 +168,8 @@ class TicTacToe
       puts "Cat's Game!"
     end
   end
+=end
+
 end
 
 # every method I build is encapusalted by this class
