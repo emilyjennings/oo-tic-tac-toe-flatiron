@@ -80,8 +80,8 @@ class TicTacToe
     input = gets.strip
     input_to_index(input)
     if valid_move?(@index)
-
-      move(@index, value)
+      current_player
+      move(@index, @value)
       display_board
     else
       puts "Please enter 1-9:"
