@@ -111,7 +111,7 @@ class TicTacToe
     end
   end
 
-=begin
+
 
 
   def full?
@@ -121,6 +121,8 @@ class TicTacToe
         return true
       end
   end
+
+=begin
 
   def draw?
     full? && !won?
