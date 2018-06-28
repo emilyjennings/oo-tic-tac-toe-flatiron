@@ -120,7 +120,7 @@ class TicTacToe
       end
   end
 
-=begin
+
 
   def draw?
     full? && !won?
@@ -129,6 +129,8 @@ class TicTacToe
   def over?
     draw? || won?
   end
+
+=begin
 
   def winner
     WIN_COMBINATIONS.detect do |win_combination| #goes through each individual arrays in the nested array
