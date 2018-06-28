@@ -33,6 +33,7 @@ class TicTacToe
 
   def input_to_index(input)
     @i = input.to_i
+    @i = input.to_int
     @i = @i-1
     @index = @i
   end
