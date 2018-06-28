@@ -1,7 +1,7 @@
 # makes a board with 9 spaces
 # the gets function will get user input - choices of 1-9
-# the board is filled in the appropriate already
-#figure out who's turn it is and track number of turns
+# the board is filled in the appropriate way already
+#figure out who's turn it is and track number of turns, decide based on turn which character
 #winner? congratulate, draw? say so
 
 
@@ -79,15 +79,15 @@ class TicTacToe
 
   def turn(input)
     puts "Please enter 1-9:"
-    @input = gets.strip
+    input = gets.strip
     input_to_index(input)
-    if valid_move?
+    if valid_move?(index)
       value = current_player
-      move(array, index, value)
+      move(index, value)
       display_board
     else
       puts "Please enter 1-9:"
-      @input = gets.strip
+      input = gets.strip
       input_to_index(input)
     end
 
