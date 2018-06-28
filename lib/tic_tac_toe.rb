@@ -70,7 +70,8 @@ class TicTacToe
 
 
   def current_player
-    turn_count.even? ? "X" : "O"
+      @value = turn_count.even? ? "X" : "O"
+
   end
 
 
@@ -79,7 +80,7 @@ class TicTacToe
     input = gets.strip
     input_to_index(input)
     if valid_move?(@index)
-      current_player 
+
       move(@index, value)
       display_board
     else
