@@ -153,7 +153,7 @@ class TicTacToe
 
 
 
-  def play(board)
+  def play
     until over?
       turn
     end
