@@ -1,7 +1,7 @@
 # makes a board with 9 spaces
 # the gets function will get user input - choices of 1-9
-# the board is filled in the appropriate already
-#figure out who's turn it is and track number of turns
+# the board is filled in the appropriate way already
+#figure out who's turn it is and track number of turns, decide based on turn which character
 #winner? congratulate, draw? say so
 
 
@@ -69,39 +69,30 @@ class TicTacToe
   end
 
 
-
   def current_player
-    turn_count.even? ? "X" : "O"
+      @value = turn_count.even? ? "X" : "O"
   end
 
 
-
-
-  def turn(input)
+  def turn
     puts "Please enter 1-9:"
-    @input = gets.strip
+    input = gets.strip
     input_to_index(input)
-    if valid_move?
-      value = current_player
-      move(array, index, value)
+    if valid_move?(@index)
+      @index = @index.to_i
+      current_player
+      move(@index, @value)
       display_board
     else
       puts "Please enter 1-9:"
-      @input = gets.strip
+      input = gets.strip
       input_to_index(input)
     end
 
   end
 
-=begin
 
-
-
-
-
-
-
-  def won?(board)
+  def won?
     WIN_COMBINATIONS.detect do |win_combination| #goes through each individual arrays in the nested array
       win_index_1 = win_combination[0] # gives backthe numbers in the arrays
       win_index_2 = win_combination[1]
@@ -129,6 +120,8 @@ class TicTacToe
       end
   end
 
+
+
   def draw?
     full? && !won?
   end
@@ -136,6 +129,8 @@ class TicTacToe
   def over?
     draw? || won?
   end
+
+
 
   def winner
     WIN_COMBINATIONS.detect do |win_combination| #goes through each individual arrays in the nested array
@@ -157,18 +152,19 @@ class TicTacToe
   end
 
 
-  def play(board)
+
+  def play
     until over?
       turn
     end
 
     if won?
-      puts "Congratulations #{winner(board)}!"
+      puts "Congratulations #{winner}!"
     else draw?
       puts "Cat's Game!"
     end
   end
-=end
+
 
 end
 
