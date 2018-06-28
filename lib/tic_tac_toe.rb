@@ -112,8 +112,6 @@ class TicTacToe
   end
 
 
-
-
   def full?
       if @board.detect{|place| place == " "}
         return false
